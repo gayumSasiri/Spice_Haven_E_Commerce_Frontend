@@ -22,6 +22,7 @@ import {
   AddNewProduct,
   UpdateProduct,
   OrderDetails,
+  AdminPanel,
 } from "./pages";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
@@ -49,6 +50,10 @@ root.render(
           <Route path="/updateproduct/:id*" element={<UpdateProduct />} />
           {/* in here id should be sellerid */}
           <Route path="/orderdetails/:id*" element={<OrderDetails />} />
+
+          {/* this route can only acess for admin */}
+          <Route path="/adminpanel" element={<AdminPanel />} />
+
 
 
           {/* Protected Routes */}
