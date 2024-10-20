@@ -12,3 +12,4 @@ export { default as ResetPassword } from './ResetPassword';
 export { default as Orders } from './Orders';
 export { default as AddNewProduct } from './AddNewProduct';
 export { default as UpdateProduct } from './UpdateProduct';
+export { default as OrderDetails } from './OrderDetails';
