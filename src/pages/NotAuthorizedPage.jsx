@@ -10,7 +10,7 @@ const NotAuthorized = () => {
       <div className="container d-flex flex-column justify-content-center align-items-center flex-grow-1 text-center">
         <h1 className="display-4 text-danger mb-4">403 - Not Authorized</h1>
         <p className="lead mb-4">You do not have permission to view this page.</p>
-        <Link to="/home" className="btn btn-outline-secondary">
+        <Link to="/" className="btn btn-outline-secondary">
           Go to Home
         </Link>
       </div>
