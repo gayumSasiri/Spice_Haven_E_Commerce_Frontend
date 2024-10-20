@@ -15,3 +15,4 @@ export { default as UpdateProduct } from './UpdateProduct';
 export { default as OrderDetails } from './OrderDetails';
 export { default as AdminPanel } from './AdminPanel';
 export { default as NotAuthorizedPage } from './NotAuthorizedPage';
+export { default as SuperUserPage } from './SuperUserPage';

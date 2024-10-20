@@ -24,6 +24,7 @@ import {
   OrderDetails,
   AdminPanel,
   NotAuthorizedPage,
+  SuperUserPage,
 } from "./pages";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
@@ -46,6 +47,7 @@ root.render(
           <Route path="/product/*" element={<PageNotFound />} />
           <Route path="/resetpassword/*" element={<ResetPassword />} />
           <Route path="/notauthorized" element={<NotAuthorizedPage />} />
+          <Route path="/superuser" element={<SuperUserPage />} />
 
           {/* Seller special pages */}
           <Route path="/newproduct" element={
