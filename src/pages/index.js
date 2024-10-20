@@ -10,3 +10,5 @@ export { default as Checkout } from './Checkout';
 export { default as PageNotFound } from './PageNotFound';
 export { default as ResetPassword } from './ResetPassword';
 export { default as Orders } from './Orders';
+export { default as AddNewProduct } from './AddNewProduct';
+export { default as UpdateProduct } from './UpdateProduct';

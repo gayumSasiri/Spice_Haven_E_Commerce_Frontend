@@ -19,6 +19,8 @@ import {
   PageNotFound,
   Orders,
   ResetPassword,
+  AddNewProduct,
+  UpdateProduct,
 } from "./pages";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
@@ -40,6 +42,10 @@ root.render(
           <Route path="*" element={<PageNotFound />} />
           <Route path="/product/*" element={<PageNotFound />} />
           <Route path="/resetpassword/*" element={<ResetPassword />} />
+          {/* seller special pages */}
+          <Route path="/newproduct" element={<AddNewProduct />} />
+          <Route path="/updateproduct/:id*" element={<UpdateProduct />} />
+
 
           {/* Protected Routes */}
           <Route path="/cart" element={

@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
     // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); // temporary Assuming store authentication status in Redux
-    const isAuthenticated = false;
+    const isAuthenticated = true;
 
     return isAuthenticated ? children : <Navigate to="/login" />;
 };
