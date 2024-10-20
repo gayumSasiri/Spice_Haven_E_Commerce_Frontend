@@ -22,6 +22,7 @@ import {
 } from "./pages";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -34,14 +35,31 @@ root.render(
           <Route path="/product/:id" element={<Product />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/cart" element={<Cart />} />
+          {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/checkout" element={<Checkout />} />
+          {/* <Route path="/checkout" element={<Checkout />} /> */}
           <Route path="*" element={<PageNotFound />} />
           <Route path="/product/*" element={<PageNotFound />} />
-          <Route path="/orders/*" element={<Orders />} />
+          {/* <Route path="/orders/*" element={<Orders />} /> */}
           <Route path="/resetpassword/*" element={<ResetPassword />} />
+
+          {/* Protected Routes */}
+          <Route path="/cart" element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          } />
+          <Route path="/checkout" element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          } />
+          <Route path="/orders" element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          } />
         </Routes>
       </Provider>
     </ScrollToTop>
