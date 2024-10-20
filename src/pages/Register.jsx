@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Footer, Navbar } from "../components";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from "react-hot-toast";
 
 const Register = () => {
     // const [role, setRole] = useState("seller");
@@ -26,9 +27,10 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            console.log(formData);            
+            // console.log(formData);            
             const response = await axios.post("http://localhost:5000/api/auth/signup", formData);
-            console.log(response);            
+            // console.log(response);  
+            if(response) toast.success("User registered succesfully!");          
             navigate("/login"); 
 
         } catch (err) {
