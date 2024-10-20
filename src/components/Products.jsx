@@ -70,6 +70,7 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const addProduct = (product) => {
+    // console.log("Adding product to cart:", product);
     dispatch(addCart(product));
   };
 

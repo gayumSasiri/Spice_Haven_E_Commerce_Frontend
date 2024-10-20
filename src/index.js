@@ -23,6 +23,7 @@ import {
   UpdateProduct,
   OrderDetails,
   AdminPanel,
+  NotAuthorizedPage,
 } from "./pages";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
@@ -44,19 +45,33 @@ root.render(
           <Route path="*" element={<PageNotFound />} />
           <Route path="/product/*" element={<PageNotFound />} />
           <Route path="/resetpassword/*" element={<ResetPassword />} />
-          {/* seller special pages */}
-          <Route path="/newproduct" element={<AddNewProduct />} />
-          {/* in here id should be sellerid */}
-          <Route path="/updateproduct/:id*" element={<UpdateProduct />} />
-          {/* in here id should be sellerid */}
-          <Route path="/orderdetails/:id*" element={<OrderDetails />} />
+          <Route path="/notauthorized" element={<NotAuthorizedPage />} />
 
-          {/* this route can only acess for admin */}
-          <Route path="/adminpanel" element={<AdminPanel />} />
+          {/* Seller special pages */}
+          <Route path="/newproduct" element={
+            <ProtectedRoute allowedRoles={['seller']}>
+              <AddNewProduct />
+            </ProtectedRoute>
+          } />
+          <Route path="/updateproduct/:id" element={
+            <ProtectedRoute allowedRoles={['seller']}>
+              <UpdateProduct />
+            </ProtectedRoute>
+          } />
+          <Route path="/orderdetails/:id" element={
+            <ProtectedRoute allowedRoles={['seller']}>
+              <OrderDetails />
+            </ProtectedRoute>
+          } />
 
+          {/* Admin route */}
+          <Route path="/adminpanel" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <AdminPanel />
+            </ProtectedRoute>
+          } />
 
-
-          {/* Protected Routes */}
+          {/* Protected Routes for general users */}
           <Route path="/cart" element={
             <ProtectedRoute>
               <Cart />
@@ -78,3 +93,4 @@ root.render(
     <Toaster />
   </BrowserRouter>
 );
+
