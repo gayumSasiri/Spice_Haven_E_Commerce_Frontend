@@ -1,6 +1,6 @@
 const initialState = {
     isAuthenticated: true, 
-    user: { id: 1, name: "John Doe", role: "admin" }, // This will store user data after login, e.g., { id, name, role: 'buyer' | 'seller' | 'admin' }
+    user: { id: 1, name: "John Doe", role: "buyer" }, // This will store user data after login, e.g., { id, name, role: 'buyer' | 'seller' | 'admin' }
 };
 
 const authReducer = (state = initialState, action) => {
