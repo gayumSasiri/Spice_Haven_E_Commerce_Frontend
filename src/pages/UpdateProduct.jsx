@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { Navbar, Footer } from "../components"; // Adjust the import based on your project structure
+import { Navbar, Footer } from "../components"; 
 
 // Dummy product data
 const dummyProducts = [

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Footer } from "../components"; // Adjust the import based on your project structure
+import { Navbar, Footer } from "../components"; 
 
 // Dummy order data
 const dummyOrders = [
