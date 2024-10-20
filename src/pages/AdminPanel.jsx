@@ -6,9 +6,10 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 
 // Dummy analytics data
 const analyticsData = [
-    { name: 'Users', count: 2 },
-    { name: 'Orders', count: 3 },
-    { name: 'Products', count: 1 },
+    { name: 'Buyers', count: 20 },
+    { name: 'Sellers', count: 14 },
+    { name: 'Orders', count: 32 },
+    { name: 'Products', count: 100 },
 ];
 
 // Dummy data
