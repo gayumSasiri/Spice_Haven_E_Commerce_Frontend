@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Footer, Navbar } from "../components";
 import { Link } from 'react-router-dom';
 const Register = () => {
+    const [role, setRole] = useState("seller");
     return (
         <>
             <Navbar />
@@ -28,6 +29,21 @@ const Register = () => {
                                     id="Email"
                                     placeholder="name@example.com"
                                 />
+                            </div>
+                            <div className="form my-3">
+                                <label htmlFor="roleSelect">Select Role</label>
+                                <select
+                                    id="roleSelect"
+                                    className="form-control"
+                                    value={role}
+                                    onChange={(e) => {
+                                        console.log(e.target.value);                                        
+                                        setRole(e.target.value);
+                                    }}
+                                >
+                                    <option value="buyer">Register as Buyer</option>
+                                    <option value="seller">Register as Seller</option>
+                                </select>
                             </div>
                             <div class="form  my-3">
                                 <label for="Password">Password</label>
