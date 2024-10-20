@@ -6,12 +6,14 @@ const Orders = () => {
     // Sample orders data 
     const initialOrders = [
         {
+            orderId: "OID001",
             username: "john_doe",
             date: "2024-10-10",
             status: "Shipped",
             purchasedAmount: "$150",
         },
         {
+            orderId: "OID002",
             username: "jane_smith",
             date: "2024-10-12",
             status: "Processing",
@@ -36,6 +38,7 @@ const Orders = () => {
                         <table className="table table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th>Order Id</th>
                                     <th>Username</th>
                                     <th>Date</th>
                                     <th>Status</th>
@@ -46,6 +49,7 @@ const Orders = () => {
                             <tbody>
                                 {orders.map((order, index) => (
                                     <tr key={index}>
+                                        <td>{order.orderId}</td>
                                         <td>{order.username}</td>
                                         <td>{order.date}</td>
                                         <td>{order.status}</td>

@@ -44,6 +44,7 @@ root.render(
           <Route path="/resetpassword/*" element={<ResetPassword />} />
           {/* seller special pages */}
           <Route path="/newproduct" element={<AddNewProduct />} />
+          {/* in here product id should be sellerid */}
           <Route path="/updateproduct/:id*" element={<UpdateProduct />} />
 
 
