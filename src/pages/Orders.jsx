@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Footer, Navbar } from "../components";
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import bootstrapBundleMin from 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Orders = () => {
     // Sample orders data 
@@ -22,9 +25,12 @@ const Orders = () => {
     ];
 
     const [orders, setOrders] = useState(initialOrders);
+    const [selectedOrderId, setSelectedOrderId] = useState(null);
 
-    const handleCancelOrder = () => {
-        alert("Our customer service agent will be in contact with you shortly.");
+    const handleCancelOrder = (orderId) => {
+        setSelectedOrderId(orderId);
+        const cancelOrderModal = new bootstrapBundleMin.Modal(document.getElementById('cancelOrderModal'));
+        cancelOrderModal.show();
     };
 
     return (
@@ -57,7 +63,7 @@ const Orders = () => {
                                         <td>
                                             <button
                                                 className="btn btn-danger"
-                                                onClick={handleCancelOrder}
+                                                onClick={() => handleCancelOrder(order.orderId)}
                                             >
                                                 Cancel Order
                                             </button>
@@ -79,6 +85,25 @@ const Orders = () => {
                 )}
             </div>
             <Footer />
+
+            {/* Bootstrap Modal for Cancel Confirmation */}
+            <div className="modal fade" id="cancelOrderModal" tabIndex="-1" aria-labelledby="cancelOrderLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="cancelOrderLabel">Cancel Order</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            Are you sure you want to cancel the order <strong>{selectedOrderId}</strong>? Our customer service agent will be in contact with you shortly.
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Confirm Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };
