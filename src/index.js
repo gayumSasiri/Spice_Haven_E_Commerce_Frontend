@@ -35,13 +35,10 @@ root.render(
           <Route path="/product/:id" element={<Product />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          {/* <Route path="/cart" element={<Cart />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* <Route path="/checkout" element={<Checkout />} /> */}
           <Route path="*" element={<PageNotFound />} />
           <Route path="/product/*" element={<PageNotFound />} />
-          {/* <Route path="/orders/*" element={<Orders />} /> */}
           <Route path="/resetpassword/*" element={<ResetPassword />} />
 
           {/* Protected Routes */}
