@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Footer, Navbar } from "../components";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const AddNewProduct = () => {
     const [productTitle, setProductTitle] = useState("");
@@ -13,26 +15,55 @@ const AddNewProduct = () => {
 
     const categories = ["Organic", "Vegan", "Exotic", "Gluten-Free"];
 
-    const handleSubmit = (e) => {
+    const sellerId = useSelector((state) => state.auth.user._id);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate fields
         if (!productTitle || !category || !description || !image || !price || !quantity) {
             setError("All fields are required.");
             return;
         }
 
-        // Proceed with form submission (e.g., API call)
-        console.log({ productTitle, category, description, image, price, quantity });
+        const formData = new FormData();
+        formData.append("sellerId", sellerId); 
+        formData.append("productTitle", productTitle);
+        formData.append("productCategory", category);
+        formData.append("description", description);
+        formData.append("image", image); 
+        formData.append("priceInLKR", price);
+        formData.append("quantityInGrams", quantity);
 
-        // Reset fields after submission
-        setProductTitle("");
-        setCategory("");
-        setDescription("");
-        setImage(null);
-        setPrice("");
-        setQuantity("");
-        setError("");
+        // console.log(sellerId, productTitle, category, description, price, quantity );
+        
+        try {
+            const response = await fetch("http://localhost:5000/api/products", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(errorData.error || "Failed to add product.");
+                return;
+            }
+
+            const newProduct = await response.json();
+            // console.log("Product added:", newProduct);
+            if(response.ok) toast.success("Product added sucessfully !");
+
+            setProductTitle("");
+            setCategory("");
+            setDescription("");
+            setImage(null);
+            setPrice("");
+            setQuantity("");
+            setError("");
+        } catch (error) {
+            console.error("Error adding product:", error);
+            setError("An error occurred. Please try again.");
+        }
+
     };
 
     return (
