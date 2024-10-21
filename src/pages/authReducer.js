@@ -1,15 +1,17 @@
 const initialState = {
-    isAuthenticated: true, 
-    user: { id: 1, name: "John Doe", role: "buyer" }, // This will store user data after login, e.g., { id, name, role: 'buyer' | 'seller' | 'admin' }
+    isAuthenticated: false, 
+    // user: { id: 1, name: "John Doe", role: "buyer" }, //  eg:- { id, name, role: 'buyer' | 'seller' | 'admin' }
+    user: null,
 };
 
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN_SUCCESS':
+            // console.log("LOGIN_SUCCESS action dispatched", action);
             return {
                 ...state,
                 isAuthenticated: true,
-                user: action.payload.user, // Assuming action.payload.user contains the user object with the role
+                user: action.payload.user, 
             };
         case 'LOGOUT':
             return initialState;

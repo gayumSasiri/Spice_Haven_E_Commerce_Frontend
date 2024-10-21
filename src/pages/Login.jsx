@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { Footer, Navbar } from "../components";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import { loginSuccess } from "./actions";
+import { useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const Login = () => {
 
@@ -11,6 +13,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const authState = useSelector((state) => state.auth);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -18,8 +22,7 @@ const Login = () => {
     
     try {
       setError("");
-      // console.log(email,password);
-      
+      // console.log(email,password); 
       const response = await axios.post("http://localhost:5000/api/auth/login", {
         password,
         email,
@@ -29,12 +32,13 @@ const Login = () => {
 
       if (response.data) {
         localStorage.setItem("token", response.data.token);
+        dispatch(loginSuccess(response.data));
         toast.success(`Hello ${response.data.fullName}!`);
+        // console.log("Current Auth State:", authState);
         navigate("/");
       }
     } catch (err) {
       setError(err.response?.data?.error || "An error occurred. Please try again.");
-
     }
   };
 
