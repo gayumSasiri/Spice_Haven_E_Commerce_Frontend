@@ -1,9 +1,22 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from "../pages/actions";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
-    const state = useSelector(state => state.handleCart)
+    const state = useSelector(state => state.handleCart);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated); 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token"); //token removed
+        dispatch(logout()); 
+        toast.success("You have been logged out!");
+        navigate("/");
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light py-3 sticky-top">
             <div className="container">
@@ -31,7 +44,15 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <div className="buttons text-center">
-                        <NavLink to="/login" className="btn btn-outline-dark m-2"><i className="fa fa-sign-in-alt mr-1"></i> Login</NavLink>
+                        {isAuthenticated ? (
+                            <button onClick={handleLogout} className="btn btn-outline-dark m-2">
+                                <i className="fa fa-sign-out-alt mr-1"></i> Logout
+                            </button>
+                        ) : (
+                            <NavLink to="/login" className="btn btn-outline-dark m-2">
+                                <i className="fa fa-sign-in-alt mr-1"></i> Login
+                            </NavLink>
+                        )}
                         <NavLink to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Register</NavLink>
                         <NavLink to="/cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-shopping mr-1"></i> Cart ({state?.length || 0}) </NavLink>
                     </div>
