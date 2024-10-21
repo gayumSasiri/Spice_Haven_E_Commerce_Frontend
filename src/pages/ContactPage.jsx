@@ -1,6 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Footer, Navbar } from "../components";
+import axios from "axios"; 
+import toast from "react-hot-toast";
+
 const ContactPage = () => {
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    mobileNumber: "",
+    email: "",
+    message: "",
+  });
+  const [error, setError] = useState("");
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      // console.log(formData);      
+      const response = await axios.post("http://localhost:5000/api/contact", formData);
+      toast.success("Message sent successfully!"); 
+      setFormData({ fullName: "", mobileNumber: "", email: "", message: "" }); 
+    } catch (err) {
+      setError(err.response?.data?.error || "An error occurred. Please try again.");
+      toast.error(error); 
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -15,14 +48,17 @@ const ContactPage = () => {
             <p className="text-center"> Fill the form below, and our customer care officer
                will contact you shortly.
             </p>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div class="form my-3">
                 <label for="Name">Name</label>
                 <input
                   type="text"
                   class="form-control"
                   id="Name"
+                  name="fullName"
                   placeholder="Enter your name"
+                  value={formData.fullName}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -32,10 +68,13 @@ const ContactPage = () => {
                   type="tel"
                   class="form-control"
                   id="mobileNumber"
+                  name="mobileNumber"
                   placeholder="Enter your mobile number"
                   pattern="[0-9]{10}"
-                  minlength="10"
-                  maxlength="10"
+                  minLength="10"
+                  maxLength="10"
+                  value={formData.mobileNumber}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -45,7 +84,10 @@ const ContactPage = () => {
                   type="email"
                   class="form-control"
                   id="Email"
+                  name="email"
                   placeholder="name@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -55,7 +97,10 @@ const ContactPage = () => {
                   rows={5}
                   class="form-control"
                   id="Password"
+                  name="message"
                   placeholder="Enter your message"
+                  value={formData.message}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -63,7 +108,6 @@ const ContactPage = () => {
                 <button
                   class="my-2 px-4 mx-auto btn btn-dark"
                   type="submit"
-                  disabled
                 >
                   Send
                 </button>
