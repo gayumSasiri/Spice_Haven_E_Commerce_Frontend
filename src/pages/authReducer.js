@@ -1,6 +1,6 @@
 const initialState = {
     isAuthenticated: false, 
-    // user: { id: 1, name: "John Doe", role: "buyer" }, //  eg:- { id, name, role: 'buyer' | 'seller' | 'admin' }
+    //  user: { id: 1, name: "John Doe", role: "buyer" }, //  eg:- { id, name, role: 'buyer' | 'seller' | 'admin' }
     user: null,
 };
 
