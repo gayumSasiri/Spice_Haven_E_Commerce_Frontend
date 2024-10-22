@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
 
 import { Footer, Navbar } from "../components";
+import toast from "react-hot-toast";
 
 const Product = () => {
   const { id } = useParams();
@@ -19,6 +20,7 @@ const Product = () => {
 
   const addProduct = (product) => {
     dispatch(addCart(product));
+    toast.success("Added to cart!")
   };
 
   //sample spices
