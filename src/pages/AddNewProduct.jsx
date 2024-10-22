@@ -139,7 +139,7 @@ const AddNewProduct = () => {
                                 />
                             </div>
                             <div className="form my-3">
-                                <label htmlFor="quantity">Quantity in grams</label>
+                                <label htmlFor="quantity">Quantity in Kg</label>
                                 <input
                                     type="number"
                                     className="form-control"
