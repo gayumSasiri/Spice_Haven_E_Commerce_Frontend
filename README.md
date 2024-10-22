@@ -35,7 +35,7 @@ To run this project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/gayumSasiri/Spice_Haven_E_Commerce_Frontend.git
    cd ecommerce
    ```
 2. Install dependencies:
