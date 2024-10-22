@@ -83,7 +83,7 @@ const Checkout = () => {
         
         const response = await axios.post("http://localhost:5000/api/orders", orderData);
         if(response){
-          console.log("okkkk");
+          // console.log("okkkk");
           
           toast.success("Order placed successfully!");
           dispatch(emptyCart()); 
