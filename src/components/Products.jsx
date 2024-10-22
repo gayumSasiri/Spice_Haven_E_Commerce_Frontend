@@ -8,7 +8,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
-const PromotionsCarousel = () => {
+const PromotionsCarousel1 = () => {
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -38,6 +38,59 @@ const PromotionsCarousel = () => {
             <div className="carousel-item">
               <img
                 src="./assets/promoImg/promo_3.jpg" 
+                className="d-block w-100"
+                alt="Promotion 3"
+              />
+              <div className="carousel-caption d-none d-md-block">
+                {/* <h5>Exotic Spice Adventure</h5> */}
+              </div>
+            </div>
+          </div>
+          <a className="carousel-control-prev" href="#promotionsCarousel" role="button" data-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="sr-only">Previous</span>
+          </a>
+          <a className="carousel-control-next" href="#promotionsCarousel" role="button" data-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="sr-only">Next</span>
+          </a>
+        </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PromotionsCarousel2 = () => {
+  return (
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+        <div id="promotionsCarousel" className="carousel slide center" data-ride="carousel">
+          <div className="carousel-inner">
+            <div className="carousel-item active">
+              <img
+                src="./assets/promoImg/promo_4.jpg" 
+                className="d-block w-100"
+                alt="Promotion 1"
+              />
+              <div className="carousel-caption d-none d-md-block">
+                {/* <h5>Spice Up Your Cooking!</h5> */}
+              </div>
+            </div>
+            <div className="carousel-item">
+              <img
+                src="./assets/promoImg/promo_5.jpg" 
+                className="d-block w-100"
+                alt="Promotion 2"
+              />
+              <div className="carousel-caption d-none d-md-block">
+                {/* <h5>Vegan Flavor Fiesta!</h5> */}
+              </div>
+            </div>
+            <div className="carousel-item">
+              <img
+                src="./assets/promoImg/promo_6.jpg" 
                 className="d-block w-100"
                 alt="Promotion 3"
               />
@@ -342,6 +395,16 @@ const Products = () => {
     { name: "Gluten-Free Spices", filterValue: "gluten-free" },
   ];
 
+  //mouse hover function below
+  const [hoveredCardId, setHoveredCardId] = useState(null);
+
+  const handleMouseEnter = (id) => {
+    setHoveredCardId(id);
+  };
+  const handleMouseLeave = () => {    
+    setHoveredCardId(null);
+  };
+
   const ShowProducts = () => {   
     return (
       <>
@@ -369,7 +432,12 @@ const Products = () => {
               key={product.id}
               className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4"
             >
-              <div className="card text-center h-100" key={product.id}>
+              <div 
+                className={`card text-center h-100 ${hoveredCardId === product.id ? 'shadow-lg' : ''}`}
+                key={product.id}
+                onMouseEnter={() => handleMouseEnter(product.id)}
+                onMouseLeave={handleMouseLeave}
+              >
                 <img
                   className="card-img-top p-3"
                   src={product.image}
@@ -447,10 +515,18 @@ const Products = () => {
       <div className="container my-3 py-3">
         <div className="row">
           <div className="col-12">
-            <h2 className="display-5 text-center">Week Promotions!</h2>
+            <h2 className="display-5 text-center fw-bold">Week Promotions!</h2>
             <hr />
-            <PromotionsCarousel />
-            <h2 className="display-5 text-center mt-2">Featured Spices</h2>
+            <div className="row">
+              <div className="col-12 col-lg-6 mb-4">
+                <PromotionsCarousel1 />
+              </div>
+
+              <div className="col-12 col-lg-6 mb-4">
+                <PromotionsCarousel2 />
+              </div>
+            </div>
+            <h2 className="display-5 text-center mt-2 fw-bold">Featured Spices</h2>
             <hr />
             <div className="row  mt-3">
               <div className="col-12 col-md-6 text-center">
