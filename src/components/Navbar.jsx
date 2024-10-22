@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../pages/actions";
+import { clearCart } from "../redux/action/index";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
@@ -13,6 +14,7 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.removeItem("token"); //token removed
         dispatch(logout()); 
+        dispatch(clearCart());
         toast.success("You have been logged out!");
         navigate("/");
     };

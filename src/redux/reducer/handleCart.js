@@ -37,6 +37,10 @@ const handleCart = (state = getInitialCart(), action) => {
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       return updatedCart;
 
+      case "LOGOUT":
+        localStorage.removeItem("cart");
+        return [];
+
     default:
       return state;
   }

@@ -13,3 +13,10 @@ export const delCart = (product) =>{
         payload:product
     }
 }
+
+// For Clearing the Cart on Logout
+export const clearCart = () => {
+    return {
+        type: "LOGOUT"
+    };
+};
