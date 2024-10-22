@@ -14,6 +14,13 @@ export const delCart = (product) =>{
     }
 }
 
+// Clean cart
+export const emptyCart = () => {
+    return {
+        type: "CLEAR_CART"
+    };
+};
+
 // For Clearing the Cart on Logout
 export const clearCart = () => {
     return {

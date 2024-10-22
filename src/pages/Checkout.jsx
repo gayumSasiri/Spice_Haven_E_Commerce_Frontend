@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Footer, Navbar } from "../components";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { clearCart, emptyCart } from "../redux/action";
 const Checkout = () => {
   const state = useSelector((state) => state.handleCart);
 
@@ -26,6 +29,72 @@ const Checkout = () => {
     let subtotal = 0;
     let shipping = 300.0;
     let totalItems = 0;
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [address, setAddress] = useState("");
+    const [address2, setAddress2] = useState("");
+    const [country, setCountry] = useState("");
+    const [stateValue, setStateValue] = useState("");
+    const [zip, setZip] = useState(0);
+    const [totalAmount, settotalAmount] = useState(0);
+    const [paymentMethod, setPaymentMethod] = useState("CreditCard");
+    const [cardDetails, setCardDetails] = useState({
+      nameOnCard: "",
+      cardNumber: "",
+      expiration: "",
+      cvv: "",
+    });
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const authState = useSelector((state) => state.auth);
+    // console.log(authState);      
+
+    const handleCheckout = async (e) => {
+      e.preventDefault();
+      //get cart
+      const storedCart = localStorage.getItem("cart");
+
+      const cartData = JSON.parse(storedCart); 
+      const transformedCart = cartData.map(item => ({
+        productId: item.id, 
+        quantity: item.qty,  
+      }));
+
+      try {
+        const orderData = {
+          firstName,
+          lastName,
+          email,
+          address,
+          address2,
+          country,
+          state: stateValue,
+          zip,
+          totalAmount: subtotal + shipping,
+          paymentMethod,
+          cart: transformedCart, 
+          cardDetails: paymentMethod === "CreditCard" ? cardDetails : null,
+          customerId: authState.user._id,
+        };
+  
+        console.log(orderData);
+        
+        const response = await axios.post("http://localhost:5000/api/orders", orderData);
+        if(response){
+          console.log("okkkk");
+          
+          toast.success("Order placed successfully!");
+          dispatch(emptyCart()); 
+          navigate("/Orders");
+        }
+  
+      } catch (error) {
+        toast.error("Failed to place order, please try again.");
+      }
+    };
+
     state.map((item) => {
       return (subtotal += item.price * item.qty);
     });
@@ -69,7 +138,7 @@ const Checkout = () => {
                   <h4 className="mb-0">Billing address</h4>
                 </div>
                 <div className="card-body">
-                  <form className="needs-validation" novalidate>
+                  <form className="needs-validation" onSubmit={handleCheckout} novalidate>
                     <div className="row g-3">
                       <div className="col-sm-6 my-1">
                         <label for="firstName" className="form-label">
@@ -79,7 +148,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="firstName"
-                          placeholder=""
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
                           required
                         />
                         <div className="invalid-feedback">
@@ -95,7 +165,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="lastName"
-                          placeholder=""
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
                           required
                         />
                         <div className="invalid-feedback">
@@ -111,7 +182,8 @@ const Checkout = () => {
                           type="email"
                           className="form-control"
                           id="email"
-                          placeholder="you@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                           required
                         />
                         <div className="invalid-feedback">
@@ -128,7 +200,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="address"
-                          placeholder="1234 Main St"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
                           required
                         />
                         <div className="invalid-feedback">
@@ -145,7 +218,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="address2"
-                          placeholder="Apartment or suite"
+                          value={address2}
+                          onChange={(e) => setAddress2(e.target.value)}
                         />
                       </div>
 
@@ -154,9 +228,12 @@ const Checkout = () => {
                           Country
                         </label>
                         <br />
-                        <select className="form-select" id="country" required>
-                          <option value="">Choose...</option>
-                          <option>India</option>
+                        <select className="form-select" id="country" value={country} onChange={(e) => setCountry(e.target.value)} required>
+                          <option value="India">India</option>
+                          <option value="Lanka">Lanka</option>
+                          <option value="China">China</option>
+                          <option value="Pakistan">Pakistan</option>
+                          <option value="Zambia">Zambia</option>
                         </select>
                         <div className="invalid-feedback">
                           Please select a valid country.
@@ -168,9 +245,14 @@ const Checkout = () => {
                           State
                         </label>
                         <br />
-                        <select className="form-select" id="state" required>
-                          <option value="">Choose...</option>
-                          <option>Punjab</option>
+                        <select className="form-select" id="state" value={stateValue} onChange={(e) => setStateValue(e.target.value)} required>
+                          <option value="Punjab">Punjab</option>
+                          <option value="kolkata">kolkata</option>
+                          <option value="Beijin">Beijin</option>
+                          <option value="Colombo">Colombo</option>
+                          <option value="Shanhai">Shanhai</option>
+                          <option value="Azmahad">Azmahad</option>
+                          <option value="Punai">Punai</option>
                         </select>
                         <div className="invalid-feedback">
                           Please provide a valid state.
@@ -185,7 +267,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="zip"
-                          placeholder=""
+                          value={zip}
+                          onChange={(e) => setZip(e.target.value)}
                           required
                         />
                         <div className="invalid-feedback">
@@ -274,8 +357,8 @@ const Checkout = () => {
                           className="form-check-input"
                           id="paymentCreditCard"
                           name="paymentMethod"
-                          value="creditCard"
-                          checked={paymentMethod === "creditCard"}
+                          value="CreditCard"
+                          checked={paymentMethod === "CreditCard"}
                           onChange={(e) => setPaymentMethod(e.target.value)}
                         />
                         <label className="form-check-label" htmlFor="paymentCreditCard">
@@ -288,8 +371,8 @@ const Checkout = () => {
                           className="form-check-input"
                           id="paymentCashOnDelivery"
                           name="paymentMethod"
-                          value="cashOnDelivery"
-                          checked={paymentMethod === "cashOnDelivery"}
+                          value="COD"
+                          checked={paymentMethod === "COD"}
                           onChange={(e) => setPaymentMethod(e.target.value)}
                         />
                         <label className="form-check-label" htmlFor="paymentCashOnDelivery">
@@ -302,8 +385,8 @@ const Checkout = () => {
                           className="form-check-input"
                           id="paymentWallet"
                           name="paymentMethod"
-                          value="wallet"
-                          checked={paymentMethod === "wallet"}
+                          value="Instore"
+                          checked={paymentMethod === "Instore"}
                           onChange={(e) => setPaymentMethod(e.target.value)}
                         />
                         <label className="form-check-label" htmlFor="paymentWallet">
@@ -313,7 +396,7 @@ const Checkout = () => {
                     </div>
 
                   {/* Credit Card Payment Fields */}
-                  {paymentMethod === "creditCard" && (
+                  {paymentMethod === "CreditCard" && (
                     <div className="row gy-3">
                       <div className="col-md-6">
                         <label htmlFor="cc-name" className="form-label">
@@ -323,7 +406,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="cc-name"
-                          placeholder=""
+                          value={cardDetails.nameOnCard}
+                          onChange={(e) => setCardDetails({ ...cardDetails, nameOnCard: e.target.value })}
                           required
                         />
                         <small className="text-muted">
@@ -342,7 +426,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="cc-number"
-                          placeholder=""
+                          value={cardDetails.cardNumber}
+                          onChange={(e) => setCardDetails({ ...cardDetails, cardNumber: e.target.value })}
                           required
                         />
                         <div className="invalid-feedback">
@@ -358,7 +443,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="cc-expiration"
-                          placeholder=""
+                          value={cardDetails.expiration}
+                          onChange={(e) => setCardDetails({ ...cardDetails, expiration: e.target.value })}
                           required
                         />
                         <div className="invalid-feedback">
@@ -374,7 +460,8 @@ const Checkout = () => {
                           type="text"
                           className="form-control"
                           id="cc-cvv"
-                          placeholder=""
+                          value={cardDetails.cvv}
+                          onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
                           required
                         />
                         <div className="invalid-feedback">
@@ -402,7 +489,7 @@ const Checkout = () => {
 
                   <button
                     className="w-100 btn btn-primary "
-                    type="submit" disabled
+                    type="submit" 
                   >
                     Continue to checkout
                     {/* in here after checkout toast should be showd and redirect to orders page */}
