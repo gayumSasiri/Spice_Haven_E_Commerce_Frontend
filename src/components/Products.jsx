@@ -385,7 +385,7 @@ const Products = () => {
                   </p>
                 </div>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item lead">LKR {product.price} for 100g</li>
+                  <li className="list-group-item lead">LKR {product.price} for 1kg</li>
                   {/* <li className="list-group-item">Dapibus ac facilisis in</li>
                     <li className="list-group-item">Vestibulum at eros</li> */}
                 </ul>
